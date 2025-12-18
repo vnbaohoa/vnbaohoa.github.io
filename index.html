@@ -272,6 +272,31 @@
         grid-template-columns: minmax(0, 1fr);
       }
     }
+
+    /* Base style for all gallery images */
+.gallery-img {
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Size options */
+.small {
+    width: 300px;
+    height: 200px;
+}
+
+.medium {
+    width: 450px;
+    height: 300px;
+}
+
+.large {
+    width: 600px;
+    height: 350px;
+}
+
   </style>
 </head>
 <body>
@@ -610,45 +635,50 @@ closeArm();
     <h3>Image Gallery</h3>
    <h4>Robot Photos (Competition Views)</h4>
 <div class="media-item">
-    <img src="20251205_140623.jpg" alt="Cube Sweeper Robot - View 1">
+    <img class="gallery-img medium" src="20251205_140623.jpg" alt="Robot View 1">
     <p>Robot on the playing field – View 1</p>
 </div>
 
 <div class="media-item">
-    <img src="20251210_154515.jpg" alt="Cube Sweeper Robot - View 2">
+    <img class="gallery-img medium" src="20251210_154515.jpg" alt="Robot View 2">
     <p>Robot on the playing field – View 2</p>
 </div>
 
 <!-- TECHNICAL DIAGRAMS -->
-<h4>Technical Diagrams (System Behavior & Software Flow)</h4>
+<h4>Technical Diagrams</h4>
+
 <div class="media-item">
-    <img src="path_process.png" alt="Path Strategy Diagram">
+    <img class="gallery-img large" src="path_process.png" alt="Path Strategy">
     <p>Programmed sweeping path across the board</p>
 </div>
 
 <div class="media-item">
-    <img src="Flowchart.png" alt="Software Flowchart">
+    <img class="gallery-img large" src="Flowchart.png" alt="Flowchart">
     <p>Software flowchart (Processes 1–7)</p>
 </div>
 
-<!-- CAD MODELS -->
-<h4>CAD Models (Mechanical Design)</h4>
+<!-- CAD -->
+<h4>CAD Models</h4>
+
 <div class="media-item">
-    <img src="3D arms.png" alt="3D Arm Design">
-    <p>3D CAD model of sweeping arms in SolidWorks</p>
+    <img class="gallery-img medium" src="3D arms.png" alt="3D Arms">
+    <p>CAD model of sweeping arms</p>
 </div>
 
-<!-- ELECTRICAL SCHEMATIC -->
+<!-- SCHEMATIC -->
 <h4>Electrical Diagram</h4>
+
 <div class="media-item">
-    <img src="Schematic.png" alt="Electrical Schematic">
-    <p>Electrical schematic showing Arduino, sensors, and servos</p>
+    <img class="gallery-img large" src="Schematic.png" alt="Schematic">
+    <p>Electrical schematic overview</p>
 </div>
+
     <footer>
       EGME 456 &middot; Individual Engineering Portfolio Page &mdash; Bao-Hoa Vu
     </footer>
   </div>
 </body>
 </html>
+
 
 
