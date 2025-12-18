@@ -26,30 +26,18 @@
     }
     h2 {
         color: #0d47a1;
+        margin-top: 20px;
     }
     .media-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 15px;
-        margin-top: 15px;
     }
     .media-item {
         background: white;
         padding: 15px;
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        text-align: center;
-    }
-    img {
-        max-width: 100%;
-        border-radius: 6px;
-    }
-    code {
-        background: #eee;
-        padding: 6px;
-        display: block;
-        white-space: pre-wrap;
-        border-radius: 6px;
     }
     footer {
         background: #0d47a1;
@@ -58,118 +46,154 @@
         padding: 15px;
         margin-top: 30px;
     }
-    a { color: #1565c0; }
+    a {
+        color: #1565c0;
+    }
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Cube Sweeper Robot<br>Individual Engineering Portfolio</h1>
-    <p>By: <strong>Bao-Hoa Vu</strong></p>
+    <h1>Individual Engineering Portfolio<br>Cube Sweeper Robot</h1>
+    <p>EGME 456 – Introduction to Mechatronics | California State University, Fullerton</p>
+    <p>Author: <strong>Bao-Hoa Vu</strong></p>
 </header>
 
 <section id="intro">
     <h2>Project Introduction</h2>
     <p>
-        The Cube Sweeper Robot was created for the Messy Room Competition, where robots must autonomously
-        clear their side of the playing field by pushing foam cubes to the opponent’s side within one minute.
-        Our design uses wide servo-driven arms to sweep the entire board rather than detect individual cubes,
-        improving reliability and minimizing sensing complexity.
+        The Cube Sweeper Robot was developed for the Messy Room Competition, where autonomous robots 
+        attempt to clear their side of a divided playing field within one minute. Each team begins with 
+        ten foam cubes scattered across their colored half, and the winner is determined by who has the 
+        fewest cubes left on their side at the end of the match.
+    </p>
+    <p>
+        Our robot was designed around a simple but robust strategy: instead of detecting individual cubes, 
+        it sweeps the board in wide lanes using servo-actuated arms. By moving in a programmed path and 
+        pushing everything in its way, the robot minimizes detection errors and maximizes cube removal.
     </p>
 </section>
 
 <section id="system-overview">
     <h2>System Overview</h2>
     <p>
-        The robot integrates mechanical, electrical, and software subsystems:
+        The Cube Sweeper Robot integrates mechanical, electrical, and software subsystems into a coordinated 
+        autonomous machine:
     </p>
     <ul>
-        <li><strong>Mechanical:</strong> 3D-printed bracket and arms controlled by micro-servos.</li>
-        <li><strong>Electrical:</strong> Arduino Uno, TCS3200 color sensor, and QTI reflectance sensors.</li>
-        <li><strong>Software:</strong> A custom finite-state machine coordinating navigation, sweeping, 
-            color sensing, and recovery modes.</li>
+        <li><strong>Mechanical System:</strong> A differential-drive chassis with two long servo-controlled 
+            arms that fold down to push cubes across the center line. The bracket and arms were fully modeled 
+            in SolidWorks and fabricated via 3D printing.</li>
+
+        <li><strong>Electrical System:</strong> An Arduino Uno serves as the control hub, operating two 
+            continuous-rotation drive servos, two standard servos for the sweeping arms, a TCS3200 color sensor 
+            for field region detection, and four QTI infrared sensors for boundary following.</li>
+
+        <li><strong>Software System:</strong> A multi-process state machine coordinates navigation, turning, 
+            sweeping, and recovery behaviors. Timing-based motor control, calibrated turning constants, and 
+            sensor-driven transitions determine how the robot sweeps lane by lane across the board.</li>
     </ul>
 </section>
 
 <section id="design">
     <h2>Design & Development Process</h2>
     <p>
-        I led the sensing and control development, integrating the QTI boundary tracking system,
-        TCS3200 color detection, and servo motion control. Much of the development focused on tuning
-        thresholds, calibrating 90° turns, and refining sensor behavior through repeated field testing.
+        My primary responsibility was the embedded software and sensing integration. I began by verifying 
+        basic servo operation, writing low-level drive functions, and testing sensor behavior individually. 
+        As the mechanical design matured, I integrated the TCS3200 and QTI sensors, building custom test 
+        scripts to understand their characteristics and develop reliable thresholds.
+    </p>
+    <p>
+        The 3D-printed bracket and arm system required several refinements to ensure adequate clearance for 
+        wiring, correct orientation for the sensors, and stable mounting for the servos. During development, 
+        we identified that wire pinch points caused servo failures, which influenced later design iterations.
+    </p>
+    <p>
+        A significant challenge was tuning the robot’s turning accuracy. Because the robot lacks encoders, 
+        I implemented a timing-based calibration routine that recorded how long the robot needed to turn 
+        exactly 90° and 180°. These values were incorporated into the main code to improve repeatability 
+        during sweeping cycles.
     </p>
 </section>
 
 <section id="sensing-control">
-    <h2>Sensing & Control Strategy</h2>
+    <h2>Sensing and Control Strategy</h2>
     <p>
-        The robot follows the right border using QTI reflectance sensors, detects midline color changes using 
-        the TCS3200 sensor, and performs time-calibrated rotations to sweep lane by lane. A state-machine 
-        structure ensures predictable transitions and modular control for each movement process.
+        My main contribution was the development of the sensing algorithms and control state machine. The 
+        QTI sensors provide real-time detection of the black boundary, allowing the robot to follow the right 
+        edge at the start of each sweep. The TCS3200 color sensor detects changes from our team color to the 
+        opponent’s, indicating when the robot reaches the center line or the far side.
+    </p>
+    <p>
+        The robot’s behavior is divided into structured processes: border following, turning toward center, 
+        sweeping with arms deployed, reversing, and shifting to the next lane. Each transition is triggered 
+        by either sensor feedback or calibrated time thresholds. To improve straight-line tracking, I implemented 
+        a QTI-based tuning routine that adjusts left/right drive pulses and averages the corrections into calibrated 
+        values for all later processes.
     </p>
 </section>
 
 <section id="testing">
     <h2>Testing and Performance</h2>
     <p>
-        The robot correctly detected field colors under most lighting conditions and performed stable sweeping 
-        cycles during practice. Competition testing revealed overshoot issues at higher speeds due to limited 
-        sensor sampling time—an important finding that informed potential future improvements.
+        Extensive testing was performed on servo calibration, color sensor thresholds, and QTI discharge timing. 
+        The robot reliably distinguished red, blue, and black regions and demonstrated stable border tracking 
+        during practice runs.
+    </p>
+    <p>
+        During the competition, the robot successfully executed several full sweeps and pushed a large number 
+        of cubes to the opposing side. However, high movement speed and lighting variations caused occasional 
+        delays in boundary detection. In one match, the robot overshot the black line and left the playfield due 
+        to insufficient sensor sampling time at high speed.
+    </p>
+    <p>
+        Despite these challenges, the system demonstrated strong integration across all subsystems and effectively 
+        executed the sweeping strategy under normal conditions.
+    </p>
+</section>
+
+<section id="reflection">
+    <h2>Reflection</h2>
+    <p>
+        The competition revealed several important engineering lessons. Timing-based control, while simple, is 
+        inherently sensitive to disturbances such as cube collisions, friction changes, and servo inconsistencies. 
+        Future designs would benefit from closed-loop heading control using encoders or an IMU to improve turn 
+        accuracy and long-distance alignment. Additionally, the TCS3200 proved sensitive to lighting conditions, 
+        suggesting that adaptive thresholds or filtering could significantly improve robustness.
+    </p>
+    <p>
+        The QTI sensors worked as expected at moderate speeds, but high-speed motion reduced the time available 
+        for accurate discharge measurement. Incorporating speed-dependent sampling or slowing the robot near 
+        expected boundaries would make detection more reliable. Overall, the project strengthened my skills in 
+        embedded programming, sensor calibration, and real-world robotic debugging.
     </p>
 </section>
 
 <section id="media">
     <h2>Media & Documentation</h2>
-
-    <h3>📹 Demonstration Video</h3>
-    <div class="media-item">
-        <!-- Replace YOUR_VIDEO_ID with your YouTube video ID -->
-        <iframe width="100%" height="315" 
-            src="https://www.youtube.com/watch?v=NaY9oDCQD0Q" 
-            title="Demo Video" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <h3>💻 Code Repository</h3>
-    <div class="media-item">
-        <p><strong>Arduino Control Code:</strong></p>
-        <a href="https://github.com/vnbaohoa/vnbaohoa.github.io/blob/main/code/Robotics.ino" target="_blank">
-            View Full Code on GitHub
-        </a>
-        <p>Sample snippet:</p>
-        <code>
-// Example: Calibrated Turn Function
-void turnLeft(float angle) {
-  int turnTime = (int)(MS_PER_DEG * angle + 0.5);
-  leftMotor.writeMicroseconds(LEFT_BACKWARD);
-  rightMotor.writeMicroseconds(RIGHT_FORWARD);
-  delay(turnTime);
-  leftMotor.writeMicroseconds(STOP_PULSE);
-  rightMotor.writeMicroseconds(STOP_PULSE);
-}
-        </code>
-    </div>
-
-    <h3>🖼 Image Gallery</h3>
     <div class="media-grid">
         <div class="media-item">
-            <img src="images/robot_front_view.jpg" alt="Robot Front View">
-            <p>Robot Front View</p>
+            <strong>Demonstration Video</strong>
+            <p><a href="https://www.youtube.com/watch?v=NaY9oDCQD0Q">Upload or link your demo video here</a></p>
         </div>
         <div class="media-item">
-            <img src="images/robot_arms_down.jpg" alt="Arms Deployed">
-            <p>Arms Deployed for Sweeping</p>
+            <strong>Arduino Code Repository</strong>
+            <p><a href="Robotics.ino">GitHub link to full robot code</a></p>
         </div>
         <div class="media-item">
-            <img src="images/sensor_mount.jpg" alt="Sensor Mounting">
-            <p>TCS3200 and QTI Sensor Mounting</p>
+            <strong>CAD Files (Bracket & Arms)</strong>
+            <p><a href="#">Link to SolidWorks or STL files</a></p>
+        </div>
+        <div class="media-item">
+            <strong>Sensor Calibration Data</strong>
+            <p><a href="#">Upload logs, plots, or calibration tables</a></p>
         </div>
     </div>
-
 </section>
 
 <footer>
-    <p>© 2025 Bao-Hoa Vu | Cube Sweeper Robot Portfolio</p>
+    <p>© 2025 Bao-Hoa Vu | Cube Sweeper Robot – Individual Engineering Portfolio</p>
 </footer>
 
 </body>
