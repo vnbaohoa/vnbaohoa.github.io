@@ -1,200 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Individual Engineering Portfolio – Cube Sweeper Robot | Bao-Hoa Vu</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+  <meta charset="UTF-8" />
+  <title>Individual Engineering Portfolio – Messy Room Robot | Bao-Hoa Vu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #020617;
+      --card: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.12);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2937;
+      --code: #020617;
+      --shadow: 0 18px 45px rgba(0,0,0,0.55);
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-        font-family: Arial, sans-serif;
-        background: #f5f7fa;
-        margin: 0;
-        padding: 0;
-        line-height: 1.6;
-        color: #333;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                   "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 32px 16px 40px;
     }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
     header {
-        background: #0d47a1;
-        color: white;
-        padding: 40px 20px;
-        text-align: center;
+      margin-bottom: 32px;
     }
+
+    .tagline {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .subhead {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta-row {
+      margin-top: 14px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .pill {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: radial-gradient(circle at top left,
+                   rgba(56,189,248,0.22),
+                   rgba(15,23,42,0.95));
+      border: 1px solid rgba(148,163,184,0.35);
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.3);
+    }
+
+    nav {
+      margin: 26px 0 30px;
+      padding: 10px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(15,23,42,0.97), rgba(15,23,42,0.6));
+      border: 1px solid rgba(148,163,184,0.28);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+      backdrop-filter: blur(30px);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.86rem;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      transition: all 0.18s ease;
+      border: 1px solid transparent;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: rgba(56,189,248,0.45);
+    }
+
     section {
-        padding: 25px 20px;
-        margin: 0 auto;
-        max-width: 900px;
+      margin-bottom: 30px;
     }
-    h2 {
-        color: #0d47a1;
-        margin-top: 20px;
+
+    .card {
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.98));
+      border-radius: var(--radius-xl);
+      padding: 22px 22px 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(148,163,184,0.35);
+      position: relative;
+      overflow: hidden;
     }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle at top right, rgba(56,189,248,0.12), transparent 55%),
+        radial-gradient(circle at bottom left, rgba(14,165,233,0.12), transparent 55%);
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #f9fafb;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .card p {
+      margin-top: 10px;
+      font-size: 0.96rem;
+    }
+
+    .card ul {
+      margin-top: 10px;
+      margin-left: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .card li {
+      margin-bottom: 6px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 0.78rem;
+    }
+
+    .badge {
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.8);
+      color: var(--muted);
+    }
+
+    .code-block {
+      background: var(--code);
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+                   Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      border: 1px solid rgba(148,163,184,0.5);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
     .media-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
     }
+
     .media-item {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 18px;
+      padding: 12px;
+      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(15,23,42,0.9);
+      font-size: 0.85rem;
     }
-    footer {
-        background: #0d47a1;
-        color: white;
-        text-align: center;
-        padding: 15px;
-        margin-top: 30px;
+
+    .media-item strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #e5e7eb;
     }
+
     a {
-        color: #1565c0;
+      color: var(--accent);
     }
-</style>
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 26px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 22px 12px 32px;
+      }
+      nav {
+        position: static;
+      }
+      .card {
+        padding: 18px 16px 16px;
+      }
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page">
+    <header>
+      <div class="tagline">EGME 456 · Mechatronics Project</div>
+      <h1>Cube Sweeper Robot &mdash; Messy Room Competition</h1>
+      <p class="subhead">
+        Individual engineering portfolio for the autonomous cube-sweeping robot developed for
+        the Messy Room Competition in EGME&nbsp;456, Introduction to Mechatronics.
+      </p>
+      <div class="meta-row">
+        <span class="pill">
+          <span class="pill-dot"></span>
+          Bao-Hoa Vu &middot; Controls &amp; Sensing / Embedded Software
+        </span>
+        <span>Fall 2025 &middot; California State University, Fullerton</span>
+      </div>
+    </header>
 
-<header>
-    <h1>Individual Engineering Portfolio<br>Cube Sweeper Robot</h1>
-    <p>EGME 456 – Introduction to Mechatronics | California State University, Fullerton</p>
-    <p>Author: <strong>Bao-Hoa Vu</strong></p>
-</header>
+    <nav>
+      <ul>
+        <li><a href="#intro">Project Introduction</a></li>
+        <li><a href="#system">System Overview</a></li>
+        <li><a href="#design">Design &amp; Development</a></li>
+        <li><a href="#sensing">Sensing &amp; Control</a></li>
+        <li><a href="#testing">Testing &amp; Performance</a></li>
+        <li><a href="#reflection">Reflection</a></li>
+        <li><a href="#media">Media &amp; Documentation</a></li>
+      </ul>
+    </nav>
 
-<section id="intro">
-    <h2>Project Introduction</h2>
-    <p>
-        The Cube Sweeper Robot was developed for the Messy Room Competition, where autonomous robots 
-        attempt to clear their side of a divided playing field within one minute. Each team begins with 
-        ten foam cubes scattered across their colored half, and the winner is determined by who has the 
-        fewest cubes left on their side at the end of the match.
-    </p>
-    <p>
-        Our robot was designed around a simple but robust strategy: instead of detecting individual cubes, 
-        it sweeps the board in wide lanes using servo-actuated arms. By moving in a programmed path and 
-        pushing everything in its way, the robot minimizes detection errors and maximizes cube removal.
-    </p>
-</section>
+    <!-- Project Introduction -->
+    <section id="intro">
+      <div class="card">
+        <div class="eyebrow">01 &mdash; Project Introduction</div>
+        <h2>Messy Room Competition Objective &amp; Robot Concept</h2>
+        <p>
+          The Messy Room Competition challenges each team to design an autonomous mobile robot
+          that “cleans” its half of a 4&nbsp;ft &times; 4&nbsp;ft playing field by the end of a
+          one-minute round. At the start of every match, ten foam cubes are scattered on each side
+          of the board. After sixty seconds of fully autonomous operation, the winner is the team
+          with fewer cubes remaining on their own colored half of the field.
+        </p>
+        <p>
+          Our team’s strategy was to treat the robot as a <em>cube sweeper</em>. Instead of
+          manipulating individual cubes, the robot uses a wide pair of servo-driven arms to sweep
+          multiple cubes at once across the center line onto the opponent’s side. The robot patrols
+          the board in strips: it aligns to the boundary, sweeps inward with its arms deployed to
+          push any cubes it encounters, then retracts the arms, backs into a safe zone, and shifts
+          laterally to cover the next strip. My primary responsibility on the team was implementing
+          and tuning the sensing and control software that makes this behavior reliable.
+        </p>
+      </div>
+    </section>
 
-<section id="system-overview">
-    <h2>System Overview</h2>
-    <p>
-        The Cube Sweeper Robot integrates mechanical, electrical, and software subsystems into a coordinated 
-        autonomous machine:
-    </p>
-    <ul>
-        <li><strong>Mechanical System:</strong> A differential-drive chassis with two long servo-controlled 
-            arms that fold down to push cubes across the center line. The bracket and arms were fully modeled 
-            in SolidWorks and fabricated via 3D printing.</li>
+    <!-- System Overview -->
+    <section id="system">
+      <div class="card">
+        <div class="eyebrow">02 &mdash; System Overview</div>
+        <h2>Integrated Mechatronic System</h2>
 
-        <li><strong>Electrical System:</strong> An Arduino Uno serves as the control hub, operating two 
-            continuous-rotation drive servos, two standard servos for the sweeping arms, a TCS3200 color sensor 
-            for field region detection, and four QTI infrared sensors for boundary following.</li>
+        <div class="grid-2">
+          <div>
+            <p>
+              The cube sweeper robot is built as an integrated mechanical, electrical, and software
+              system around an Arduino microcontroller:
+            </p>
+            <ul>
+              <li>
+                <strong>Mechanical subsystem.</strong>
+                A compact two-wheel drive chassis supports the electronics, color sensor, and a
+                pair of 3D-printed sweeping arms. The arms start folded and rotate down to form a
+                ~12&nbsp;in span, allowing the robot to push many cubes in a single pass while
+                staying within the allowed footprint.
+              </li>
+              <li>
+                <strong>Electrical subsystem.</strong>
+                The robot uses continuous-rotation Parallax servos for differential drive,
+                standard hobby servos for the arms, a TCS3200 color sensor board to distinguish
+                red, blue, and black regions on the field, and QTI infrared reflectance sensors
+                mounted near the front corners to detect the black border and to follow boundary
+                lines. All components are powered from the course-specified battery pack and are
+                wired to the Arduino with attention to strain relief and serviceability.
+              </li>
+              <li>
+                <strong>Software subsystem.</strong>
+                The Arduino sketch implements a finite-state machine that coordinates navigation,
+                sensing, and arm deployment. High-level “process” states (sweeping a strip,
+                shifting laterally, transitioning at edges) call lower-level primitives such as
+                <code>driveForward</code>, <code>spinLeft</code>, <code>spinRight</code>,
+                <code>GetColors</code>, and QTI-based line following. Timing and sensor feedback
+                are combined to approximate 90&deg; rotations and 5&nbsp;in backing maneuvers.
+              </li>
+            </ul>
+          </div>
 
-        <li><strong>Software System:</strong> A multi-process state machine coordinates navigation, turning, 
-            sweeping, and recovery behaviors. Timing-based motor control, calibrated turning constants, and 
-            sensor-driven transitions determine how the robot sweeps lane by lane across the board.</li>
-    </ul>
-</section>
+          <div>
+            <p>
+              My role focused on the <strong>electrical integration of the sensors</strong> and
+              the <strong>embedded software</strong> that converts their readings into reliable
+              motion. I implemented:
+            </p>
+            <ul>
+              <li>the drive primitives for forward, reverse, and spin maneuvers,</li>
+              <li>color classification using the TCS3200’s frequency outputs,</li>
+              <li>QTI charge/discharge timing for border detection and alignment, and</li>
+              <li>a multi-stage state machine that encodes our sweeping strategy.</li>
+            </ul>
+            <div class="badge-row">
+              <span class="badge">Arduino C++</span>
+              <span class="badge">TCS3200 Color Sensor</span>
+              <span class="badge">QTI Line Sensors</span>
+              <span class="badge">Finite-State Control</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section id="design">
-    <h2>Design & Development Process</h2>
-    <p>
-        My primary responsibility was the embedded software and sensing integration. I began by verifying 
-        basic servo operation, writing low-level drive functions, and testing sensor behavior individually. 
-        As the mechanical design matured, I integrated the TCS3200 and QTI sensors, building custom test 
-        scripts to understand their characteristics and develop reliable thresholds.
-    </p>
-    <p>
-        The 3D-printed bracket and arm system required several refinements to ensure adequate clearance for 
-        wiring, correct orientation for the sensors, and stable mounting for the servos. During development, 
-        we identified that wire pinch points caused servo failures, which influenced later design iterations.
-    </p>
-    <p>
-        A significant challenge was tuning the robot’s turning accuracy. Because the robot lacks encoders, 
-        I implemented a timing-based calibration routine that recorded how long the robot needed to turn 
-        exactly 90° and 180°. These values were incorporated into the main code to improve repeatability 
-        during sweeping cycles.
-    </p>
-</section>
+    <!-- Design & Development -->
+    <section id="design">
+      <div class="card">
+        <div class="eyebrow">03 &mdash; Design &amp; Development Process</div>
+        <h2>Individual Contributions, Iterations, and Problem Solving</h2>
 
-<section id="sensing-control">
-    <h2>Sensing and Control Strategy</h2>
-    <p>
-        My main contribution was the development of the sensing algorithms and control state machine. The 
-        QTI sensors provide real-time detection of the black boundary, allowing the robot to follow the right 
-        edge at the start of each sweep. The TCS3200 color sensor detects changes from our team color to the 
-        opponent’s, indicating when the robot reaches the center line or the far side.
-    </p>
-    <p>
-        The robot’s behavior is divided into structured processes: border following, turning toward center, 
-        sweeping with arms deployed, reversing, and shifting to the next lane. Each transition is triggered 
-        by either sensor feedback or calibrated time thresholds. To improve straight-line tracking, I implemented 
-        a QTI-based tuning routine that adjusts left/right drive pulses and averages the corrections into calibrated 
-        values for all later processes.
-    </p>
-</section>
+        <p>
+          I joined the project as the primary software and sensing engineer. Early in the semester
+          I brought up the base robot, verified servo operation, and wrote the first motion
+          routines for open-loop forward, backward, left turn, right turn, and 180&deg; rotation.
+          These functions became the building blocks for all higher-level behaviors.
+        </p>
 
-<section id="testing">
-    <h2>Testing and Performance</h2>
-    <p>
-        Extensive testing was performed on servo calibration, color sensor thresholds, and QTI discharge timing. 
-        The robot reliably distinguished red, blue, and black regions and demonstrated stable border tracking 
-        during practice runs.
-    </p>
-    <p>
-        During the competition, the robot successfully executed several full sweeps and pushed a large number 
-        of cubes to the opposing side. However, high movement speed and lighting variations caused occasional 
-        delays in boundary detection. In one match, the robot overshot the black line and left the playfield due 
-        to insufficient sensor sampling time at high speed.
-    </p>
-    <p>
-        Despite these challenges, the system demonstrated strong integration across all subsystems and effectively 
-        executed the sweeping strategy under normal conditions.
-    </p>
-</section>
+        <p>
+          Once the TCS3200 color sensor and QTI modules were mounted, I developed standalone test
+          sketches to understand their raw behavior under classroom lighting. For the color sensor,
+          I measured the pulse duration for red and blue channels and experimented with different
+          thresholds to distinguish our side, the opponent’s side, and the black border. For the
+          QTI sensors, I implemented a charge–discharge timing method that measures how long each
+          sensor takes to transition from HIGH to LOW as an indicator of reflectivity.
+        </p>
 
-<section id="reflection">
-    <h2>Reflection</h2>
-    <p>
-        The competition revealed several important engineering lessons. Timing-based control, while simple, is 
-        inherently sensitive to disturbances such as cube collisions, friction changes, and servo inconsistencies. 
-        Future designs would benefit from closed-loop heading control using encoders or an IMU to improve turn 
-        accuracy and long-distance alignment. Additionally, the TCS3200 proved sensitive to lighting conditions, 
-        suggesting that adaptive thresholds or filtering could significantly improve robustness.
-    </p>
-    <p>
-        The QTI sensors worked as expected at moderate speeds, but high-speed motion reduced the time available 
-        for accurate discharge measurement. Incorporating speed-dependent sampling or slowing the robot near 
-        expected boundaries would make detection more reliable. Overall, the project strengthened my skills in 
-        embedded programming, sensor calibration, and real-world robotic debugging.
-    </p>
-</section>
+        <p>
+          After basic sensing was working, I integrated the subsystems into a single sketch and
+          introduced the notion of <code>botProcess</code> states. Each numeric state
+          (<code>'2'</code> through <code>'7'</code>) encapsulates a phase of our coverage pattern:
+          initial sweeping along the far edge, stepping inward, realigning after crossing the
+          center line, and handling left and right borders. Within each process function, I use
+          small internal states (e.g., <code>p4state = 'm' or 's'</code>) and timestamp checks
+          based on <code>millis()</code> to avoid blocking delays and to keep rotations
+          time-bounded.
+        </p>
 
-<section id="media">
-    <h2>Media & Documentation</h2>
+        <p>
+          A key challenge was controlling drift over time. Because the drive servos are not
+          identical, the robot tended to veer. I implemented a QTI-based tuning routine
+          (<code>runTuning()</code>) that adjusts the left and right pulse widths while the robot
+          follows a line, averages the required corrections, and stores tuned values
+          (<code>leftTunedPulse</code> and <code>rightTunedPulse</code>) that are reused by all
+          motion primitives. This significantly reduced cumulative position error during long
+          sweeps.
+        </p>
+      </div>
+    </section>
+
+    <!-- Sensing & Control Strategy -->
+    <section id="sensing">
+      <div class="card">
+        <div class="eyebrow">04 &mdash; Sensing &amp; Control Strategy</div>
+        <h2>Navigation Logic and Sensor-Driven Behavior</h2>
+
+        <div class="grid-2">
+          <div>
+            <p>
+              My main responsibility was designing the sensing and control strategy and
+              implementing it in Arduino C++. The logic is built around three sensor modalities:
+            </p>
+            <ul>
+              <li>
+                <strong>Color sensing for field awareness.</strong>
+                The TCS3200 module is wired with scaling pins <code>s0</code>, <code>s1</code>,
+                and <code>s3</code> and read via the <code>GetColors()</code> function. For each
+                sample, the robot measures the pulse duration corresponding to red and blue
+                components, prints them for debugging, and classifies the result into
+                <em>red side</em>, <em>blue side</em>, <em>black border</em>, or
+                <em>unknown</em>. This allows the robot to detect when it has crossed the center
+                line or approached a border and to change state accordingly.
+              </li>
+              <li>
+                <strong>QTI sensors for alignment and border following.</strong>
+                Two QTI sensor pairs are mounted near the left and right front edges. I implemented
+                <code>readQTI()</code>, which charges both QTI nodes, then measures how many loop
+                iterations each node remains HIGH while discharging. Inside the tuning routine and
+                the motion states, I compare these timings to a calibrated threshold
+                (<code>QTIhold</code>) to distinguish between the high reflectivity of the colored
+                field and the low reflectivity of the black border, which is used both to keep the
+                robot in-bounds and to adjust heading.
+              </li>
+              <li>
+                <strong>Finite-state motion control.</strong>
+                The sketch organizes behavior into process functions (<code>process2()</code> to
+                <code>process7()</code>) that are selected by <code>botProcess</code>. Each process
+                uses color and QTI readings plus elapsed time to decide when to move forward, spin
+                left or right, back up, or transition to the next process. For example, in
+                <code>process2</code> the robot moves forward along the edge until the color sensor
+                detects the opponent’s side; it then spins 180&deg; and hands control to
+                <code>process3</code>, which begins the next phase of the sweep.
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              The control layer is implemented as a set of reusable primitives:
+            </p>
+            <div class="code-block">
+driveForward(int left, int right);
+driveBackward();
+spinLeft(int angle);
+spinRight(int angle);
+stopBot();
+openArm();
+closeArm();
+            </div>
+            <p>
+              These primitives abstract away the raw servo pulse widths and enable each process
+              function to focus on state-based decisions rather than low-level actuation. I also
+              added convenience functions like <code>goForth()</code> and
+              <code>goBack()</code>, which translate approximate distances in inches into motion
+              times using an experimentally determined speed constant.
+            </p>
+            <p>
+              I tuned the thresholds and timings iteratively in the lab, watching serial output for
+              color values and QTI durations while adjusting constants such as
+              <code>Time90</code>, <code>BackupTime</code>, and <code>QTIhold</code> to achieve
+              robust behavior under typical lighting conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testing & Performance -->
+    <section id="testing">
+      <div class="card">
+        <div class="eyebrow">05 &mdash; Testing and Performance</div>
+        <h2>Verification, Competition Behavior, and Limitations</h2>
+
+        <p>
+          Testing was carried out incrementally, beginning with simple bench tests and progressing
+          to full one-minute practice runs on the competition field.
+        </p>
+
+        <ul>
+          <li>
+            <strong>Drive and rotation tests.</strong>
+            I first validated the open-loop drive functions on a taped test course, measuring the
+            approximate distance moved for different pulse widths and durations. Through repeated
+            trials I tuned <code>Time90</code> so that a commanded 90&deg; spin left or right was
+            consistent enough for our coverage pattern.
+          </li>
+          <li>
+            <strong>Color sensor calibration.</strong>
+            Using the serial monitor, I logged raw red and blue pulse durations over the red, blue,
+            and black regions of the field and adjusted the classification logic in
+            <code>GetColors()</code> until the robot correctly recognized its own side, the
+            opponent’s side, and the black border under normal lab lighting.
+          </li>
+          <li>
+            <strong>QTI line-following and border detection.</strong>
+            I wrote a dedicated test that slowly drove the robot toward the border while printing
+            QTI timings. From these measurements I selected <code>QTIhold</code> and verified that
+            the robot stopped or turned before leaving the board. I then enabled
+            <code>runTuning()</code> and confirmed that the averaged pulse widths reduced drift
+            over several feet of travel.
+          </li>
+          <li>
+            <strong>Integrated field runs.</strong>
+            With all subsystems integrated, we conducted repeated one-minute runs. These tests
+            confirmed that the robot could reliably stay on its side of the board, sweep cubes
+            outward with its arms, and respond to color transitions at the center line. They also
+            revealed sensitivities: performance degraded under very different lighting conditions,
+            and tightly packed cube clusters could deflect the robot enough to miss part of a
+            strip.
+          </li>
+        </ul>
+
+        <p>
+          Overall, the final robot behaved in line with our design intent: it was able to traverse
+          multiple vertical strips, keep itself in-bounds, and sweep significant numbers of cubes
+          across the center. Remaining issues, such as occasional overshoot at borders and
+          sensitivity to cube placement, are discussed in the reflection below.
+        </p>
+      </div>
+    </section>
+
+    <!-- Reflection -->
+    <section id="reflection">
+      <div class="card">
+        <div class="eyebrow">06 &mdash; Reflection</div>
+        <h2>Technical Takeaways and Future Improvements</h2>
+
+        <p>
+          This project was my first end-to-end autonomous robot built around my own embedded
+          control code, and it highlighted the gap between idealized models and real hardware
+          behavior. Small differences in servo response, sensor noise, and lighting all had visible
+          effects on navigation and boundary detection, which required careful tuning and robust
+          state logic rather than single “magic” constants.
+        </p>
+
+        <p>
+          From a controls perspective, I saw both the strengths and limits of timing-based open-loop
+          motion. While timed spins and straight-line commands are simple and resource-efficient,
+          they accumulate error over long paths. Given more time, I would explore closed-loop
+          heading control using additional sensors (such as a gyro or encoders) and implement a
+          higher-level path planner that can adapt its sweep pattern based on cube distribution.
+        </p>
+
+        <p>
+          On the sensing side, the project reinforced the importance of designing for variations in
+          environment. A more systematic calibration procedure, as well as dynamic thresholding for
+          both the TCS3200 and QTI sensors, would make the robot more robust to lighting changes
+          and different field surfaces. I would also refactor the code into a more modular
+          architecture with clear interfaces between perception, decision-making, and actuation to
+          improve readability and reuse.
+        </p>
+
+        <p>
+          Overall, the experience strengthened my skills in embedded C++, sensor integration,
+          real-time debugging, and finite-state machine design for autonomous robots.
+        </p>
+      </div>
+    </section>
+
+     <!-- IMAGES -->
+    <h3>🖼 Image Gallery</h3>
     <div class="media-grid">
         <div class="media-item">
-            <strong>Demonstration Video</strong>
-            <p><a href="https://www.youtube.com/watch?v=NaY9oDCQD0Q">Upload or link your demo video here</a></p>
+            <img src="20251205_140623.jpg" alt="Cube Sweeper Robot - View 1">
+            <p>Robot on competition field (view 1)</p>
         </div>
         <div class="media-item">
-            <strong>Arduino Code Repository</strong>
-            <p><a href="Robotics.ino">GitHub link to full robot code</a></p>
+            <img src="20251210_154515.jpg" alt="Cube Sweeper Robot - View 2">
+            <p>Robot on competition field (view 2)</p>
         </div>
         <div class="media-item">
-            <strong>CAD Files (Bracket & Arms)</strong>
-            <p><a href="#">Link to SolidWorks or STL files</a></p>
+            <img src="3D arms.png" alt="3D Arm Design">
+            <p>3D model of servo arms</p>
         </div>
         <div class="media-item">
-            <strong>Sensor Calibration Data</strong>
-            <p><a href="#">Upload logs, plots, or calibration tables</a></p>
+            <img src="path_process.png" alt="Path Strategy Diagram">
+            <p>Path / process strategy diagram</p>
+        </div>
+        <div class="media-item">
+            <img src="Flowchart.png" alt="Software Flowchart">
+            <p>Software flowchart (processes 1–7)</p>
+        </div>
+        <div class="media-item">
+            <img src="Schematic.png" alt="Electrical Schematic">
+            <p>Electrical schematic overview</p>
         </div>
     </div>
-</section>
+    </section>
 
-<footer>
-    <p>© 2025 Bao-Hoa Vu | Cube Sweeper Robot – Individual Engineering Portfolio</p>
-</footer>
-
+    <footer>
+      EGME 456 &middot; Individual Engineering Portfolio Page &mdash; Bao-Hoa Vu
+    </footer>
+  </div>
 </body>
 </html>
